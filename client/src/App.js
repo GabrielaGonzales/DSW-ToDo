@@ -22,7 +22,12 @@ function App() {
   }, []);
 
   const addTask = () => {
-    //
+    if (newTask) {
+      let num = toDo.length + 1;
+      let newEntry = { taskName: newTask, state: false }
+      setToDo([...toDo, newEntry])
+      setNewTask('');
+    }
   }
 
   const deleteTask = (id) => {
@@ -51,6 +56,35 @@ function App() {
       <br></br>
       <h2>ToDo List App</h2>
       <br></br>
+
+    <div className='row'>
+      <div className='col'>
+        <input className='form-control form-control-lg'/>
+      </div>
+      <div className='col-auto'>
+        <button className='btn btn-lg btn-success mr-20'>Update</button>
+        <button className='btn btn-lg btn-warning'>Cancel</button>
+      </div>
+    </div>
+    <br />
+
+      {/* Add tasks */}
+      <div className='row'>
+        <div className='col'>
+          <input
+            value={newTask}
+            onChange={ (e) => setNewTask(e.target.value)}
+            className='form-control form-control-lg'/>
+        </div>
+        <div className='col-auto'>
+          <button className='btn btn-lg btn-success' onClick={addTask}>
+            Add Tasks
+          </button>
+        </div>
+      </div>
+      <br />
+
+      {/* Display ToDos */}
       {toDo && toDo.length ? '' : 'No Tasks...'}
 
       {toDo && toDo
@@ -63,13 +97,13 @@ function App() {
                   <span className='taskText'>{task.taskName}</span>
                 </div>
                 <div className='iconsWrap'>
-                  <span>
+                  <span title='Completed/Not Completed'>
                     <FontAwesomeIcon icon={faCircleCheck}></FontAwesomeIcon>
                   </span>
-                  <span>
+                  <span title='Edit'>
                     <FontAwesomeIcon icon={faPen}></FontAwesomeIcon>
                   </span>
-                  <span>
+                  <span title='Delete'>
                     <FontAwesomeIcon icon={faTrashCan}></FontAwesomeIcon>
                   </span>
                 </div>
