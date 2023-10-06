@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import axios from 'axios';
 import {
   faCircleCheck, faP, faPen, faTrashCan
 } from '@fortawesome/free-solid-svg-icons';
@@ -12,22 +13,35 @@ function App() {
   const [updateData, setUpdateData] = useState('');
 
   useEffect(() => {
-    fetch("http://localhost:5127/api/Assignment")
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        setToDo(data);
-      })
+    getTasks();
   }, []);
 
   const addTask = () => {
-    if (newTask) {
-      let num = toDo.length + 1;
-      let newEntry = { taskName: newTask, state: false }
-      setToDo([...toDo, newEntry])
-      setNewTask('');
+    const url = 'http://localhost:5127/api/Assignment';
+    let newEntry = {
+      taskName: newTask,
+      state: false,
+      description: "hola",
+      priority: "Low",
+      dueDate: "2023-10-06T02:43:35.041Z"
     }
+    
+    axios.post(url, newEntry)
+    .then((result) => {
+      getTasks();
+    })
+
+    setNewTask('');
+  }
+
+  const getTasks = () => {
+    axios.get("http://localhost:5127/api/Assignment")
+      .then((response) => {
+        setToDo(response.data)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
   }
 
   const deleteTask = (id) => {
