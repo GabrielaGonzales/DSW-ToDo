@@ -11,6 +11,7 @@ import axios from 'axios';
 function App() {
   const [toDo, setToDo] = useState([]);
   const [newTask, setNewTask] = useState('');
+  const [newDescription, setNewDescription] = useState('');
   const [updateData, setUpdateData] = useState('');
 
   useEffect(() => {
@@ -22,7 +23,7 @@ function App() {
     let newEntry = {
       taskName: newTask,
       state: false,
-      description: "hola",
+      description: newDescription,
       priority: "Low",
       dueDate: "2023-10-06T02:43:35.041Z"
     }
@@ -34,6 +35,7 @@ function App() {
     })
 
     setNewTask('');
+    setNewDescription('');
   }
 
   const getTasks = () => {
@@ -80,6 +82,17 @@ function App() {
     let newEntry = {
       id: updateData.id,
       taskName: e.target.value,
+      description: updateData.description,
+      state: updateData.state ? true : false
+    }
+    setUpdateData(newEntry);
+  }
+
+  const changeTaskDescription = (e) => {
+    let newEntry = {
+      id: updateData.id,
+      taskName: updateData.taskName,
+      description: e.target.value,
       state: updateData.state ? true : false
     }
     setUpdateData(newEntry);
@@ -90,7 +103,7 @@ function App() {
     const data = {
       taskName: updateData.taskName,
       state: updateData.state,
-      description: "hola",
+      description: updateData.description,
       priority: "Low",
       dueDate: "2023-10-06T02:43:35.041Z"
     }
@@ -115,13 +128,16 @@ function App() {
         <UpdateForm
           updateData={updateData}
           changeTask={changeTask}
+          changeTaskDescription={changeTaskDescription}
           updateTask={updateTask}
           cancelUpdate={cancelUpdate}
         />
       ) : (
         <AddTaskForm
           newTask={newTask}
+          newDescription={newDescription}
           setNewTask={setNewTask}
+          setNewDescription={setNewDescription}
           addTask={addTask}
         />
       )}

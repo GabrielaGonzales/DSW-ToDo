@@ -16,6 +16,7 @@ const ToDo = ({ toDo, markDone, setUpdateData, deleteTask }) => {
                   <span className='taskNumber'>{index + 1}</span>
                   <span className='taskText'>{task.taskName}</span>
                 </div>
+                <p className='taskDesc'>{task.description}</p>
                 <div className='iconsWrap'>
                   <span
                     title='Completed/Not Completed'
@@ -28,6 +29,7 @@ const ToDo = ({ toDo, markDone, setUpdateData, deleteTask }) => {
                       onClick={ () => setUpdateData({
                         id: task.id,
                         taskName: task.taskName,
+                        description: task.description,
                         state: task.state ? true : false
                       })}>
                       <FontAwesomeIcon icon={faPen}></FontAwesomeIcon>

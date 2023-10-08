@@ -1,4 +1,4 @@
-const AddTaskForm = ({ newTask, setNewTask, addTask }) => {
+const AddTaskForm = ({ newTask, newDescription, setNewTask, setNewDescription, addTask }) => {
   return (
     <>
       <div className="row">
@@ -8,12 +8,19 @@ const AddTaskForm = ({ newTask, setNewTask, addTask }) => {
             onChange={(e) => setNewTask(e.target.value)}
             className="form-control form-control-lg"
           />
+          <br />
+          <input
+            value={newDescription}
+            onChange={(ev) => setNewDescription(ev.target.value)}
+            className="form-control form-control-lg"
+          />
         </div>
         <div className="col-auto">
           <button
             className="btn btn-lg btn-success"
-            onClick={addTask}>
-              Add Tasks
+            onClick={addTask}
+          >
+            Add Tasks
           </button>
         </div>
       </div>

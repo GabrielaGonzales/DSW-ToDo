@@ -1,4 +1,4 @@
-const UpdateForm = ({ updateData, changeTask, updateTask, cancelUpdate }) => {
+const UpdateForm = ({ updateData, changeTask, changeTaskDescription, updateTask, cancelUpdate }) => {
   return (
     <>
       <div className="row">
@@ -6,6 +6,12 @@ const UpdateForm = ({ updateData, changeTask, updateTask, cancelUpdate }) => {
           <input
             value={updateData && updateData.taskName}
             onChange={(e) => changeTask(e)}
+            className="form-control form-control-lg"
+          />
+          <br />
+          <input
+            value={updateData && updateData.description}
+            onChange={(e) => changeTaskDescription(e)}
             className="form-control form-control-lg"
           />
         </div>
