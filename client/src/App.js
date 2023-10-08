@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
 import {
-  faCircleCheck, faP, faPen, faTrashCan
+  faCircleCheck, faPen, faTrashCan
 } from '@fortawesome/free-solid-svg-icons';
 
 function App() {
@@ -45,24 +45,62 @@ function App() {
   }
 
   const deleteTask = (id) => {
-    //
+    if (window.confirm("Are you sure to delete this task?") === true) {
+      axios.delete(`http://localhost:5127/api/Assignment/${id}`)
+        .then((result) => {
+          if (result.status === 200) {
+            console.log("Delete");
+          }
+          setToDo(toDo.filter(task => task.id !== id))
+        })
+    }
   }
 
   //mark task as done
-  const markDone = (id) => {
-    //
+  const markDone = (task) => {
+    const url = `http://localhost:5127/api/Assignment/${task.id}`
+    const data = {
+      taskName: task.taskName,
+      state: !task.state,
+      description: "hola",
+      priority: "Low",
+      dueDate: "2023-10-06T02:43:35.041Z"
+    }
+
+    axios.put(url, data)
+      .then((result) => {
+        getTasks();
+      })
   }
 
   const cancelUpdate = () => {
-    //
+    setUpdateData('');
   }
 
   const changeTask = (e) => {
-    //
+    let newEntry = {
+      id: updateData.id,
+      taskName: e.target.value,
+      state: updateData.state ? true : false
+    }
+    setUpdateData(newEntry);
   }
 
   const updateTask = () => {
-    //
+    const url = `http://localhost:5127/api/Assignment/${updateData.id}`
+    const data = {
+      taskName: updateData.taskName,
+      state: updateData.state,
+      description: "hola",
+      priority: "Low",
+      dueDate: "2023-10-06T02:43:35.041Z"
+    }
+
+    axios.put(url, data)
+      .then((result) => {
+        getTasks();
+        setUpdateData('');
+      })
   }
 
   return (
@@ -73,11 +111,17 @@ function App() {
 
     <div className='row'>
       <div className='col'>
-        <input className='form-control form-control-lg'/>
+        <input
+          value={ updateData && updateData.taskName}
+          onChange={ (e) => changeTask(e)}
+          className='form-control form-control-lg'
+        />
       </div>
       <div className='col-auto'>
-        <button className='btn btn-lg btn-success mr-20'>Update</button>
-        <button className='btn btn-lg btn-warning'>Cancel</button>
+        <button onClick={updateTask} className='btn btn-lg btn-success mr-20'>
+          Update
+        </button>
+        <button onClick={cancelUpdate} className='btn btn-lg btn-warning'>Cancel</button>
       </div>
     </div>
     <br />
@@ -111,13 +155,20 @@ function App() {
                   <span className='taskText'>{task.taskName}</span>
                 </div>
                 <div className='iconsWrap'>
-                  <span title='Completed/Not Completed'>
+                  <span title='Completed/Not Completed' onClick={ (e) => markDone(task) }>
                     <FontAwesomeIcon icon={faCircleCheck}></FontAwesomeIcon>
                   </span>
-                  <span title='Edit'>
-                    <FontAwesomeIcon icon={faPen}></FontAwesomeIcon>
-                  </span>
-                  <span title='Delete'>
+                  {task.state ? null : (
+                    <span title='Edit' 
+                      onClick={ () => setUpdateData({
+                        id: task.id,
+                        taskName: task.taskName,
+                        state: task.state ? true : false
+                      })}>
+                      <FontAwesomeIcon icon={faPen}></FontAwesomeIcon>
+                    </span>
+                  )}
+                  <span title='Delete' onClick={() => deleteTask(task.id)}>
                     <FontAwesomeIcon icon={faTrashCan}></FontAwesomeIcon>
                   </span>
                 </div>
