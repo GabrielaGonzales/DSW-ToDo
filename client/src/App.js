@@ -109,38 +109,44 @@ function App() {
       <h2>ToDo List App</h2>
       <br></br>
 
-    <div className='row'>
-      <div className='col'>
-        <input
-          value={ updateData && updateData.taskName}
-          onChange={ (e) => changeTask(e)}
-          className='form-control form-control-lg'
-        />
-      </div>
-      <div className='col-auto'>
-        <button onClick={updateTask} className='btn btn-lg btn-success mr-20'>
-          Update
-        </button>
-        <button onClick={cancelUpdate} className='btn btn-lg btn-warning'>Cancel</button>
-      </div>
-    </div>
-    <br />
-
-      {/* Add tasks */}
-      <div className='row'>
-        <div className='col'>
-          <input
-            value={newTask}
-            onChange={ (e) => setNewTask(e.target.value)}
-            className='form-control form-control-lg'/>
+    {updateData && updateData ? (
+      <>
+        <div className='row'>
+          <div className='col'>
+            <input
+              value={ updateData && updateData.taskName}
+              onChange={ (e) => changeTask(e)}
+              className='form-control form-control-lg'
+            />
+          </div>
+          <div className='col-auto'>
+            <button onClick={updateTask} className='btn btn-lg btn-success mr-20'>
+              Update
+            </button>
+            <button onClick={cancelUpdate} className='btn btn-lg btn-warning'>Cancel</button>
+          </div>
         </div>
-        <div className='col-auto'>
-          <button className='btn btn-lg btn-success' onClick={addTask}>
-            Add Tasks
-          </button>
+        <br />
+      </>
+    ) : (
+      <>
+        {/* Add tasks */}
+        <div className='row'>
+          <div className='col'>
+            <input
+              value={newTask}
+              onChange={ (e) => setNewTask(e.target.value)}
+              className='form-control form-control-lg'/>
+          </div>
+          <div className='col-auto'>
+            <button className='btn btn-lg btn-success' onClick={addTask}>
+              Add Tasks
+            </button>
+          </div>
         </div>
-      </div>
-      <br />
+        <br />
+      </>
+    )}
 
       {/* Display ToDos */}
       {toDo && toDo.length ? '' : 'No Tasks...'}
