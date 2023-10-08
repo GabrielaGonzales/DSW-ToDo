@@ -4,6 +4,8 @@ import UpdateForm from './components/UpdateForm.jsx';
 import ToDo from './components/ToDo.jsx';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
 
 function App() {
@@ -28,6 +30,7 @@ function App() {
     axios.post(url, newEntry)
     .then((result) => {
       getTasks();
+      toast.success("Task added successfully");
     })
 
     setNewTask('');
@@ -47,9 +50,7 @@ function App() {
     if (window.confirm("Are you sure to delete this task?") === true) {
       axios.delete(`http://localhost:5127/api/Assignment/${id}`)
         .then((result) => {
-          if (result.status === 200) {
-            console.log("Delete");
-          }
+          toast.success("Task deleted successfully");
           setToDo(toDo.filter(task => task.id !== id))
         })
     }
@@ -97,6 +98,7 @@ function App() {
     axios.put(url, data)
       .then((result) => {
         getTasks();
+        toast.success("Task updated successfully");
         setUpdateData('');
       })
   }
@@ -107,20 +109,22 @@ function App() {
       <h2>ToDo List App</h2>
       <br></br>
 
-    {updateData && updateData ? (
-      <UpdateForm
-        updateData={updateData}
-        changeTask={changeTask}
-        updateTask={updateTask}
-        cancelUpdate={cancelUpdate}
-      />
-    ) : (
-      <AddTaskForm
-        newTask={newTask}
-        setNewTask={setNewTask}
-        addTask={addTask}
-      />
-    )}
+      <ToastContainer position='bottom-right' autoClose={3000} hideProgressBar/>
+
+      {updateData && updateData ? (
+        <UpdateForm
+          updateData={updateData}
+          changeTask={changeTask}
+          updateTask={updateTask}
+          cancelUpdate={cancelUpdate}
+        />
+      ) : (
+        <AddTaskForm
+          newTask={newTask}
+          setNewTask={setNewTask}
+          addTask={addTask}
+        />
+      )}
 
       {toDo && toDo.length ? '' : 'No Tasks...'}
       <ToDo

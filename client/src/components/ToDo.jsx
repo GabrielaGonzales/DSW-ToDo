@@ -17,7 +17,10 @@ const ToDo = ({ toDo, markDone, setUpdateData, deleteTask }) => {
                   <span className='taskText'>{task.taskName}</span>
                 </div>
                 <div className='iconsWrap'>
-                  <span title='Completed/Not Completed' onClick={ (e) => markDone(task) }>
+                  <span
+                    title='Completed/Not Completed'
+                    onClick={ (e) => markDone(task) }
+                  >
                     <FontAwesomeIcon icon={faCircleCheck}></FontAwesomeIcon>
                   </span>
                   {task.state ? null : (
@@ -30,9 +33,9 @@ const ToDo = ({ toDo, markDone, setUpdateData, deleteTask }) => {
                       <FontAwesomeIcon icon={faPen}></FontAwesomeIcon>
                     </span>
                   )}
-                  <span title='Delete' onClick={() => deleteTask(task.id)}>
-                    <FontAwesomeIcon icon={faTrashCan}></FontAwesomeIcon>
-                  </span>
+                    <span title='Delete' onClick={() => deleteTask(task.id)}>
+                      <FontAwesomeIcon icon={faTrashCan}></FontAwesomeIcon>
+                    </span>
                 </div>
               </div>
             </React.Fragment>
