@@ -16,10 +16,4 @@ public class Assignment {
 
   [BsonElement("Description")]
   public string Description { get; set; } = null!;
-
-  [BsonElement("Priority")]
-  public string Priority { get; set; } = null!;
-
-  [BsonElement("DueDate")]
-  public DateTime DueDate { get; set; }
 }

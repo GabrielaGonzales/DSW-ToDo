@@ -23,9 +23,7 @@ function App() {
     let newEntry = {
       taskName: newTask,
       state: false,
-      description: newDescription,
-      priority: "Low",
-      dueDate: "2023-10-06T02:43:35.041Z"
+      description: newDescription
     }
     
     axios.post(url, newEntry)
@@ -63,9 +61,7 @@ function App() {
     const data = {
       taskName: task.taskName,
       state: !task.state,
-      description: "hola",
-      priority: "Low",
-      dueDate: "2023-10-06T02:43:35.041Z"
+      description: task.description
     }
 
     axios.put(url, data)
@@ -104,8 +100,6 @@ function App() {
       taskName: updateData.taskName,
       state: updateData.state,
       description: updateData.description,
-      priority: "Low",
-      dueDate: "2023-10-06T02:43:35.041Z"
     }
 
     axios.put(url, data)
