@@ -3,12 +3,14 @@ const UpdateForm = ({ updateData, changeTask, changeTaskDescription, updateTask,
     <>
       <div className="row">
         <div className="col">
+          <h6>Task Name</h6>
           <input
             value={updateData && updateData.taskName}
             onChange={(e) => changeTask(e)}
             className="form-control form-control-lg"
           />
           <br />
+          <h6>Description</h6>
           <input
             value={updateData && updateData.description}
             onChange={(e) => changeTaskDescription(e)}
