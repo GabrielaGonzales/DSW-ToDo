@@ -13,13 +13,14 @@ function App() {
   const [newTask, setNewTask] = useState('');
   const [newDescription, setNewDescription] = useState('');
   const [updateData, setUpdateData] = useState('');
+  const API = "https://todo-gabriela.azurewebsites.net/";
 
   useEffect(() => {
     getTasks();
   }, []);
 
   const addTask = () => {
-    const url = 'http://localhost:5127/api/Assignment';
+    const url = API;
     let newEntry = {
       taskName: newTask,
       state: false,
@@ -37,7 +38,7 @@ function App() {
   }
 
   const getTasks = () => {
-    axios.get("http://localhost:5127/api/Assignment")
+    axios.get(API)
       .then((response) => {
         setToDo(response.data)
       })
@@ -48,7 +49,7 @@ function App() {
 
   const deleteTask = (id) => {
     if (window.confirm("Are you sure to delete this task?") === true) {
-      axios.delete(`http://localhost:5127/api/Assignment/${id}`)
+      axios.delete(`${API}${id}`)
         .then((result) => {
           toast.success("Task deleted successfully");
           setToDo(toDo.filter(task => task.id !== id))
@@ -57,7 +58,7 @@ function App() {
   }
 
   const markDone = (task) => {
-    const url = `http://localhost:5127/api/Assignment/${task.id}`
+    const url = `${API}${task.id}`
     const data = {
       taskName: task.taskName,
       state: !task.state,
@@ -95,7 +96,7 @@ function App() {
   }
 
   const updateTask = () => {
-    const url = `http://localhost:5127/api/Assignment/${updateData.id}`
+    const url = `${API}${updateData.id}`
     const data = {
       taskName: updateData.taskName,
       state: updateData.state,

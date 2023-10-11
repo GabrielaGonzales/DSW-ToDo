@@ -5,7 +5,7 @@ using ToDoList.Services;
 namespace ToDoList.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("/")]
 public class AssignmentController : ControllerBase {
   private readonly AssignmentService _assignmentService;
 
